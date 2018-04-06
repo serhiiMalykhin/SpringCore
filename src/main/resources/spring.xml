@@ -12,6 +12,15 @@
 
     <bean id="eventLogger" class="com.spring.core.logger.ConsoleEventLogger"/>
 
+    <bean id="cacheFileEventLogger" class="com.spring.core.logger.CacheFileEventLogger" init-method="init" destroy-method="destroy">
+        <constructor-arg value="Spring.txt"/>
+        <constructor-arg value="3"/>
+    </bean>
+
+    <bean id="fileEventLogger" class="com.spring.core.logger.FileEventLogger" init-method="init">
+        <constructor-arg value="Spring.txt"/>
+    </bean>
+
     <bean id="event" class="com.spring.core.event.Event" scope="prototype">
         <constructor-arg>
             <bean class="java.util.Date"/>
@@ -24,7 +33,7 @@
 
     <bean id="app" class="com.spring.core.App">
         <constructor-arg name="client" ref="client"/>
-        <constructor-arg name="eventLogger" ref="eventLogger"/>
+        <constructor-arg name="eventLogger" ref="cacheFileEventLogger"/>
     </bean>
 
 </beans>

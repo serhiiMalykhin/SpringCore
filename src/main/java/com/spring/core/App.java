@@ -3,7 +3,7 @@ package com.spring.core;
 import com.spring.core.event.Event;
 import com.spring.core.logger.EventLogger;
 import com.spring.core.model.Client;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {
@@ -22,9 +22,13 @@ public class App {
     }
 
     public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
         App app = context.getBean(App.class);
-        Event event = context.getBean(Event.class);
-        app.logEvent(event);
+        for (int i = 0; i < 10; i++) {
+            Event event = context.getBean(Event.class);
+            app.logEvent(event);
+        }
+
+        context.close();
     }
 }
