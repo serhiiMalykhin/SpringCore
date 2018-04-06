@@ -1,6 +1,6 @@
 package com.spring.core;
 
-import com.spring.core.event.Event;
+import com.spring.core.model.Event;
 import com.spring.core.logger.EventLogger;
 import com.spring.core.model.Client;
 import org.springframework.context.ConfigurableApplicationContext;

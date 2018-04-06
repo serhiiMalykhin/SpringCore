@@ -1,6 +1,6 @@
 package com.spring.core.logger;
 
-import com.spring.core.event.Event;
+import com.spring.core.model.Event;
 
 import java.util.ArrayList;
 import java.util.List;

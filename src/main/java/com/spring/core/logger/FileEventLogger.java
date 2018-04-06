@@ -1,6 +1,6 @@
 package com.spring.core.logger;
 
-import com.spring.core.event.Event;
+import com.spring.core.model.Event;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;

@@ -1,4 +1,4 @@
-package com.spring.core.event;
+package com.spring.core.model;
 
 import java.text.DateFormat;
 import java.util.Date;
