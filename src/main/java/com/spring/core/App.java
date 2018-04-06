@@ -1,5 +1,6 @@
 package com.spring.core;
 
+import com.spring.core.event.Event;
 import com.spring.core.logger.EventLogger;
 import com.spring.core.model.Client;
 import org.springframework.context.ApplicationContext;
@@ -14,15 +15,16 @@ public class App {
         this.eventLogger = eventLogger;
     }
 
-    public void logEvent(String msg) {
-        String message = msg.replaceAll(client.getId(), client.getFullName());
-        eventLogger.logEvent(message);
+    public void logEvent(Event event) {
+        String handedEvent = event.getMsg();
+        event.setMsg(handedEvent.replaceAll(client.getId(), client.getFullName()));
+        eventLogger.logEvent(event);
     }
 
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
         App app = context.getBean(App.class);
-
-        app.logEvent("Some event for user 1");
+        Event event = context.getBean(Event.class);
+        app.logEvent(event);
     }
 }
