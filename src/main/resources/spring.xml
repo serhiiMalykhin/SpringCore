@@ -5,30 +5,9 @@
  		http://www.springframework.org/schema/beans
  		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
-    <bean id="client" class="com.spring.core.model.Client">
-        <constructor-arg value="1"/>
-        <constructor-arg value="John Smith"/>
-    </bean>
+    <import resource="loggers.xml"/>
 
-    <bean id="eventLogger" class="com.spring.core.logger.ConsoleEventLogger"/>
-
-    <bean id="cacheFileEventLogger" class="com.spring.core.logger.CacheFileEventLogger" destroy-method="destroy" parent="fileEventLogger">
-        <constructor-arg value="3"/>
-    </bean>
-
-    <bean id="fileEventLogger" class="com.spring.core.logger.FileEventLogger" init-method="init">
-        <constructor-arg value="log.txt"/>
-    </bean>
-
-    <bean id="event" class="com.spring.core.event.Event" scope="prototype">
-        <constructor-arg>
-            <bean class="java.util.Date"/>
-        </constructor-arg>
-        <constructor-arg>
-            <bean class="java.text.DateFormat" factory-method="getDateTimeInstance"/>
-        </constructor-arg>
-        <property name="msg" value="Some event for user 1"/>
-    </bean>
+    <import resource="model.xml"/>
 
     <bean id="app" class="com.spring.core.App">
         <constructor-arg name="client" ref="client"/>
