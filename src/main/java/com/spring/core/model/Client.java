@@ -1,4 +1,4 @@
-package com.spring.model;
+package com.spring.core.model;
 
 public class Client {
     private String id;
