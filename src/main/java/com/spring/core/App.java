@@ -4,21 +4,31 @@ import com.spring.core.logger.EventLogger;
 import com.spring.core.model.Client;
 import com.spring.core.model.Event;
 import com.spring.core.model.EventType;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
+@Configuration
+@ComponentScan("com.spring.core")
+@ImportResource("classpath:spring.xml")
 public class App {
-    private Client client;
-    private Map<EventType, EventLogger> loggers;
-    private EventLogger defaultLogger;
 
-    public App(Client client, EventLogger eventLogger, Map<EventType, EventLogger> loggers) {
-        this.client = client;
-        this.defaultLogger = eventLogger;
-        this.loggers = loggers;
-    }
+    @Autowired
+    private Client client;
+
+    @Resource(name="loggerMap")
+    private Map<EventType, EventLogger> loggers;
+
+
+    @Autowired
+    @Qualifier("consoleEventLogger")
+    private EventLogger defaultLogger;
 
     public void logEvent(EventType type, Event event) {
         EventLogger logger = loggers.get(type);
@@ -32,14 +42,13 @@ public class App {
     }
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(App.class);
         App app = context.getBean(App.class);
         EventType type = context.getBean(EventType.class);
         for (int i = 0; i < 10; i++) {
             Event event = context.getBean(Event.class);
             app.logEvent(type, event);
         }
-
         context.close();
     }
 }
