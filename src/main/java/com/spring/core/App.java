@@ -1,6 +1,7 @@
 package com.spring.core;
 
 import com.spring.core.logger.EventLogger;
+import com.spring.core.logger.StatisticAspect;
 import com.spring.core.model.Client;
 import com.spring.core.model.Event;
 import com.spring.core.model.EventType;
@@ -9,12 +10,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.ImportResource;
 
 import javax.annotation.Resource;
 import java.util.Map;
 
 @Configuration
+@EnableAspectJAutoProxy
 @ComponentScan("com.spring.core")
 @ImportResource("classpath:spring.xml")
 public class App {
@@ -49,6 +52,8 @@ public class App {
             Event event = context.getBean(Event.class);
             app.logEvent(type, event);
         }
+        StatisticAspect aspect = context.getBean(StatisticAspect.class);
+        System.out.println(aspect);
         context.close();
     }
 }
